@@ -11,8 +11,6 @@ A Golang lock-free thread-safe HashMap optimized for fastest read access.
 
 It is not a general-use HashMap and currently has slow write performance for write heavy uses.
 
-The minimal supported Golang version is 1.19 as it makes use of Generics and the new atomic package helpers.
-
 ## Usage
 
 Example uint8 key map uses:
@@ -44,34 +42,34 @@ count := atomic.LoadInt64(counter) // read counter
 ## Benchmarks
 
 Reading from the hash map for numeric key types in a thread-safe way is faster than reading from a standard Golang map
-in an unsafe way and four times faster than Golang's `sync.Map`:
+in an unsafe way and three times faster than Golang's `sync.Map`:
 
 ```
-ReadHashMapUint-8                676ns ± 0%
-ReadHaxMapUint-8                 689ns ± 1%
-ReadGoMapUintUnsafe-8            792ns ± 0%
-ReadXsyncMapUint-8               954ns ± 0%
-ReadGoSyncMapUint-8             2.62µs ± 1%
-ReadSkipMapUint-8               3.27µs ±10%
-ReadGoMapUintMutex-8            29.6µs ± 2%
+ReadXsyncMapUint-8                924.5n ± ∞ ¹
+ReadHashMapUint-8                 1.072µ ± ∞ ¹
+ReadHaxMapUint-8                  1.296µ ± ∞ ¹
+ReadGoMapUintUnsafe-8             1.318µ ± ∞ ¹
+ReadGoSyncMapUint-8               3.389µ ± ∞ ¹
+ReadSkipMapUint-8                 4.820µ ± ∞ ¹
+ReadGoMapUintMutex-8              32.62µ ± ∞ ¹
 ```
 
 Reading from the map while writes are happening:
 ```
-ReadHashMapWithWritesUint-8      860ns ± 1%
-ReadHaxMapWithWritesUint-8       930ns ± 1%
-ReadGoSyncMapWithWritesUint-8   3.06µs ± 2%
+ReadHashMapWithWritesUint-8       1.235µ ± ∞ ¹
+ReadHaxMapWithWritesUint-8        1.433µ ± ∞ ¹
+ReadGoSyncMapWithWritesUint-8     4.503µ ± ∞ ¹
 ```
 
 Write performance without any concurrent reads:
 
 ```
-WriteGoMapMutexUint-8           14.8µs ± 2%
-WriteHashMapUint-8              22.3µs ± 1%
-WriteGoSyncMapUint-8            69.3µs ± 0%
+WriteGoMapMutexUint-8             21.72µ ± ∞ ¹
+WriteHashMapUint-8                27.99µ ± ∞ ¹
+WriteGoSyncMapUint-8              78.43µ ± ∞ ¹
 ```
 
-The benchmarks were run with Golang 1.19.1 on Linux and a Ryzen 9 5900X CPU using `make benchmark-perflock`.
+The benchmarks were run with Golang 1.24.4 on Linux and a Ryzen 9 5900X CPU using `make benchmark-perflock`.
 
 ## Technical details
 

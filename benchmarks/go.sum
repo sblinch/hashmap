@@ -1,8 +1,10 @@
-github.com/alphadose/haxmap v1.1.0 h1:M7Dxdr+civMQkWCgDpoktNpLofDBz7XzdS3rF3Y6r4U=
-github.com/alphadose/haxmap v1.1.0/go.mod h1:Pq2IXbl9/ytYHfrIAd7rIVtZQ2ezdIhZfvdqOizDeWY=
-github.com/puzpuzpuz/xsync/v2 v2.3.1 h1:oAm/nI4ZC+FqOM7t2fnA7DaQVsuj4fO2KcTcNTS1Q9Y=
-github.com/puzpuzpuz/xsync/v2 v2.3.1/go.mod h1:gD2H2krq/w52MfPLE+Uy64TzJDVY7lP2znR9qmR35kU=
+github.com/alphadose/haxmap v1.4.1 h1:VtD6VCxUkjNIfJk/aWdYFfOzrRddDFjmvmRmILg7x8Q=
+github.com/alphadose/haxmap v1.4.1/go.mod h1:rjHw1IAqbxm0S3U5tD16GoKsiAd8FWx5BJ2IYqXwgmM=
+github.com/puzpuzpuz/xsync/v2 v2.5.1 h1:mVGYAvzDSu52+zaGyNjC+24Xw2bQi3kTr4QJ6N9pIIU=
+github.com/puzpuzpuz/xsync/v2 v2.5.1/go.mod h1:gD2H2krq/w52MfPLE+Uy64TzJDVY7lP2znR9qmR35kU=
 github.com/zhangyunhao116/fastrand v0.3.0 h1:7bwe124xcckPulX6fxtr2lFdO2KQqaefdtbk+mqO/Ig=
 github.com/zhangyunhao116/fastrand v0.3.0/go.mod h1:0v5KgHho0VE6HU192HnY15de/oDS8UrbBChIFjIhBtc=
 github.com/zhangyunhao116/skipmap v0.10.1 h1:CMH4yGZQESBM1kUNozQqQ+Ra2pKqwF3HxaTADOaIfPs=
 github.com/zhangyunhao116/skipmap v0.10.1/go.mod h1:CClnLPHl3DI+hHgrcy0OZ/QJ45AWgA3ObVcQyJop12c=
+golang.org/x/exp v0.0.0-20221031165847-c99f073a8326 h1:QfTh0HpN6hlw6D3vu8DAwC8pBIwikq0AI1evdm+FksE=
+golang.org/x/exp v0.0.0-20221031165847-c99f073a8326/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
