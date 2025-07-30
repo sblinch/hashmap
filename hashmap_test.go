@@ -166,10 +166,7 @@ func TestGrow(t *testing.T) {
 	m := New[int, string]()
 	m.Grow(uintptr(63))
 
-	for { // make sure to wait for resize operation to finish
-		if m.resizing.Load() == 0 {
-			break
-		}
+	for m.resizing.Load() != 0 { // make sure to wait for resize operation to finish
 		time.Sleep(time.Microsecond * 50)
 	}
 
@@ -190,10 +187,7 @@ func TestResize(t *testing.T) {
 
 	assert.Equal(t, itemCount, m.Len())
 
-	for { // make sure to wait for resize operation to finish
-		if m.resizing.Load() == 0 {
-			break
-		}
+	for m.resizing.Load() != 0 { // make sure to wait for resize operation to finish
 		time.Sleep(time.Microsecond * 50)
 	}
 
@@ -324,7 +318,7 @@ func TestHashMap_parallel(t *testing.T) {
 			defer timer.Stop()
 		InfLoop:
 			for {
-				for i := 0; i < maxVal; i++ {
+				for i := range maxVal {
 					select {
 					case <-timer.C:
 						break InfLoop
@@ -347,7 +341,7 @@ func TestHashMap_parallel(t *testing.T) {
 	}
 
 	// Initial fill.
-	for i := 0; i < maxVal; i++ {
+	for i := range maxVal {
 		m.Set(i, i)
 	}
 	t.Run("set_get", func(t *testing.T) {
@@ -383,7 +377,7 @@ func TestHashMap_SetConcurrent(t *testing.T) {
 	m := New[string, int]()
 
 	var wg sync.WaitGroup
-	for i := 0; i < 100; i++ {
+	for i := range 100 {
 		wg.Add(1)
 
 		go func(i int) {
@@ -406,7 +400,7 @@ func TestHashMap_SetConcurrent(t *testing.T) {
 func TestConcurrentInsertDelete(t *testing.T) {
 	t.Parallel()
 
-	for i := 0; i < 200; i++ {
+	for range 200 {
 		el1 := &ListElement[int, int]{
 			key:     111,
 			keyHash: 111,

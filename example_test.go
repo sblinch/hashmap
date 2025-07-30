@@ -13,7 +13,7 @@ func TestAPICounter(t *testing.T) {
 	t.Parallel()
 	m := New[string, *int64]()
 
-	for i := 0; i < 100; i++ {
+	for i := range 100 {
 		s := fmt.Sprintf("/api%d/", i%4)
 
 		counter := int64(0)
