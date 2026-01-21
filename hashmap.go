@@ -4,6 +4,7 @@ package hashmap
 import (
 	"bytes"
 	"fmt"
+	"iter"
 	"reflect"
 	"strconv"
 	"sync/atomic"
@@ -58,6 +59,23 @@ func (m *Map[Key, Value]) Get(key Key) (Value, bool) {
 	}
 	return *new(Value), false
 }
+
+// Exists returns a bool indicating whether an element exists under the given hash key.
+func (m *Map[Key, Value]) Exists(key Key) bool {
+	hash := m.hasher(key)
+
+	for element := m.store.Load().item(hash); element != nil; element = element.Next() {
+		if element.keyHash == hash && element.key == key {
+			return true
+		}
+
+		if element.keyHash > hash {
+			return false
+		}
+	}
+	return false
+}
+
 
 // GetOrInsert returns the existing value for the key if present.
 // Otherwise, it stores and returns the given value.
@@ -232,6 +250,50 @@ func (m *Map[Key, Value]) Range(f func(Key, Value) bool) {
 		item = item.Next()
 	}
 }
+
+// All returns an iterator over each key and value present in the map.
+func (m *Map[Key, Value]) All() iter.Seq2[Key, Value] {
+	return func(yield func(Key, Value) bool) {
+		item := m.linkedList.First()
+
+		for item != nil {
+			value := item.Value()
+			if !yield(item.key, value) {
+				return
+			}
+			item = item.Next()
+		}
+	}
+}
+
+// Keys returns an iterator over each key present in the map.
+func (m *Map[Key, Value]) Keys() iter.Seq[Key] {
+	return func(yield func(Key) bool) {
+		item := m.linkedList.First()
+
+		for item != nil {
+			if !yield(item.key) {
+				return
+			}
+			item = item.Next()
+		}
+	}
+}
+
+// Values returns an iterator over each key present in the map.
+func (m *Map[Key, Value]) Values() iter.Seq[Value] {
+	return func(yield func(Value) bool) {
+		item := m.linkedList.First()
+
+		for item != nil {
+			if !yield(item.Value()) {
+				return
+			}
+			item = item.Next()
+		}
+	}
+}
+
 
 func (m *Map[Key, Value]) allocate(newSize uintptr) {
 	m.linkedList = NewList[Key, Value]()
